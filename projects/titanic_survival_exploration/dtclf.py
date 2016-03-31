@@ -16,13 +16,7 @@ class ClfSurvivor:
         self.outcomes = full_data['Survived'].copy()
         self.data = full_data.drop(['Survived','Name','Ticket','Cabin','Embarked','PassengerId'], axis = 1).copy()
         self.data.fillna(-1, inplace=True)
-        self.data['Sex'][self.data['Sex'].isin(['male'])] = 0
-        self.data['Sex'][self.data['Sex'].isin(['female'])] = 1
-#         self.data[self.data.isin(['male']), 'Sex'] = 1
-#         self.data[self.data.isin(['female']), 'Sex'] = 0
-#         self.data.loc[:, ['Sex']][self.data['Sex'].isin(['male'])] = 0
-#         self.data.loc[:, ['Sex']][self.data['Sex'].isin(['female'])] = 1
-        
+        self.data.replace({'Sex' : { 'male' : 0, 'female' : 1}},  inplace=True) 
         return
     def prepareData(self):
         self.features_train = self.data
