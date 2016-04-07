@@ -58,7 +58,7 @@ class DataExploration:
         return
     def run(self):
         self.showStats()
-        self.savetoCSV()
+#         self.savetoCSV()
         return
     
 
