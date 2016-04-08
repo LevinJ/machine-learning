@@ -60,7 +60,7 @@ class EvaluateModel(DataExploration):
         # Make an appropriate scoring function
         scoring_function = make_scorer(performance_metric, greater_is_better = False)
         
-        cv = ShuffleSplit(y.shape[0], n_iter=600,  test_size=0.3, random_state=42)
+        cv = ShuffleSplit(y.shape[0], n_iter=1000,  test_size=0.3, random_state=42)
     
         # Make the GridSearchCV object
         reg = GridSearchCV(regressor, parameters, scoring  = scoring_function, cv = cv)
