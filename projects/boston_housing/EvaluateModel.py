@@ -46,6 +46,14 @@ class EvaluateModel(DataExploration):
 
         error = mean_squared_error(y_true, y_predict)
         return error
+    def dispFeatureImportance(self, reg):
+        features_list = self.city_data.feature_names
+        sortIndexes = reg.feature_importances_.argsort()[::-1]
+        features_rank = features_list[sortIndexes]
+        num_rank = reg.feature_importances_[sortIndexes]
+        print "Ranked features: {}".format(features_rank)
+        print "Ranked importance: {}".format(num_rank)
+        return
     def fit_model(self, X, y):
         """ Tunes a decision tree regressor model using GridSearchCV on the input data X 
             and target labels y and returns this optimal model. """
@@ -69,6 +77,7 @@ class EvaluateModel(DataExploration):
         reg.fit(X, y)
         print "best score {}".format(reg.best_score_)
         print "best parameters {}".format(reg.best_params_)
+        self.dispFeatureImportance(reg.best_estimator_)
     
         # Return the optimal model
         return reg.best_estimator_
