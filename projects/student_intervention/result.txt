@@ -1,0 +1,80 @@
+KNN,
+
+******************Default KNeighborsClassifier
+Training KNeighborsClassifier...
+Training time (secs): 0.001
+Default paramters KNeighborsClassifier(algorithm='auto', leaf_size=30, metric='minkowski',
+           metric_params=None, n_jobs=1, n_neighbors=5, p=2,
+           weights='uniform')
+******************Default KNeighborsClassifier
+Prediction time (secs): 0.007
+Prediction result(train set)  0.881
+Prediction time (secs): 0.003
+Prediction result(test set)  0.780
+
+
+******************Grid search KNeighborsClassifier
+best parameters {'n_neighbors': 24, 'p': 2}
+best score 0.827
+Training time (secs): 3.093
+******************Grid search KNeighborsClassifier
+Prediction time (secs): 0.008
+Prediction result(train set)  0.831
+Prediction time (secs): 0.003
+Prediction result(test set)  0.811
+
+SVM,
+
+
+******************Default SVC
+Training SVC...
+Training time (secs): 0.007
+Default paramters SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+  decision_function_shape=None, degree=3, gamma=0.02, kernel='rbf',
+  max_iter=-1, probability=False, random_state=None, shrinking=True,
+  tol=0.001, verbose=False)
+******************Default SVC
+Prediction time (secs): 0.004
+Prediction result(train set)  0.872
+Prediction time (secs): 0.002
+Prediction result(test set)  0.784
+
+
+maunal tuning:
+******************Grid search SVC
+best parameters {'C': 1.0, 'gamma': 0.10000000000000001}
+best score 0.842
+Training time (secs): 796.342
+******************Grid search SVC
+Prediction time (secs): 0.007
+Prediction result(train set)  0.976
+Prediction time (secs): 0.002
+Prediction result(test set)  0.789
+
+Decision Tree:
+
+******************Default DecisionTreeClassifier
+Training DecisionTreeClassifier...
+Training time (secs): 0.031
+Default paramters DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=None,
+            max_features=None, max_leaf_nodes=None, min_samples_leaf=1,
+            min_samples_split=5, min_weight_fraction_leaf=0.0,
+            presort=False, random_state=None, splitter='best')
+******************Default DecisionTreeClassifier
+Prediction time (secs): 0.011
+Prediction result(train set)  0.968
+Prediction time (secs): 0.000
+Prediction result(test set)  0.593
+
+
+******************Grid search DecisionTreeClassifier
+best parameters {'min_samples_split': 2, 'max_depth': 2}
+best score 0.819
+Training time (secs): 6.460
+******************Grid search DecisionTreeClassifier
+Prediction time (secs): 0.000
+Prediction result(train set)  0.835
+Prediction time (secs): 0.000
+Prediction result(test set)  0.800
+
+

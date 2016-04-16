@@ -10,6 +10,7 @@ class PrepareData(ExploreData):
         ExploreData.__init__(self)
         self.num_train = 300  # about 75% of the data
         self.getAllFeatureTarget()
+        self.splitDataTrainTest()
         return
     def getAllFeatureTarget(self):
         student_data = self.student_data
@@ -21,8 +22,8 @@ class PrepareData(ExploreData):
         
         self.X_all = student_data[feature_cols]  # feature values for all students
         self.y_all = student_data[target_col]  # corresponding targets/labels
-        print "\nFeature values:-"
-        print self.X_all.head()  # print the first 5 rows
+#         print "\nFeature values:-"
+#         print self.X_all.head()  # print the first 5 rows
         return
     # Preprocess feature columns
     def preprocess_features(self, X):
@@ -51,14 +52,14 @@ class PrepareData(ExploreData):
         X_all = self.preprocess_features(self.X_all)
         y_all = self.y_all.replace(['yes', 'no'], [1, 0])
         
-        X_train, X_test, y_train, y_test = train_test_split(X_all, y_all, test_size=num_test, random_state=42)
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X_all, y_all, test_size=num_test, random_state=42)
         
-        print "Training set: {} samples".format(X_train.shape[0])
-        print "Test set: {} samples".format(X_test.shape[0])
+        print "Training set: {} samples".format(self.X_train.shape[0])
+        print "Test set: {} samples".format(self.X_test.shape[0])
         # Note: If you need a validation set, extract it from within training data
         return
     def run(self):
-        self.splitDataTrainTest()
+#         self.splitDataTrainTest()
 
         return
     
