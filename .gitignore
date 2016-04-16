@@ -67,3 +67,5 @@ target/
 .pydevproject
 
 projects/boston_housing/bostonhousing.csv
+*.docx
+*.tmp

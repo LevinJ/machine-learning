@@ -52,6 +52,8 @@ class TrainModel(PrepareData):
         return
     def getTunedParamterOptions(self):
         pass
+    def run_extra(self):
+        pass
     def run_with_GridSearchCV(self):
         print("******************Grid search {}".format(self.clf.__class__.__name__))
         start = time.time()
@@ -69,11 +71,12 @@ class TrainModel(PrepareData):
         print "Prediction result(test set)  {:.3f}".format(res)
         return
     def run(self):
-        self.run_with_GridSearchCV()
+#         self.run_with_GridSearchCV()
 #         self.run_with_full_train_num()
         
         
-#         self.run_with_variant_train_num()
+        self.run_with_variant_train_num()
+        self.run_extra()
         
 
         return

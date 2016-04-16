@@ -49,10 +49,10 @@ class PrepareData(ExploreData):
         
         # TODO: Then, select features (X) and corresponding labels (y) for the training and test sets
         # Note: Shuffle the data or randomly select samples to avoid any bias due to ordering in the dataset
-        X_all = self.preprocess_features(self.X_all)
-        y_all = self.y_all.replace(['yes', 'no'], [1, 0])
+        self.X_all = self.preprocess_features(self.X_all)
+        self.y_all = self.y_all.replace(['yes', 'no'], [1, 0])
         
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X_all, y_all, test_size=num_test, random_state=42)
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(self.X_all, self.y_all, test_size=num_test, random_state=42)
         
         print "Training set: {} samples".format(self.X_train.shape[0])
         print "Test set: {} samples".format(self.X_test.shape[0])
