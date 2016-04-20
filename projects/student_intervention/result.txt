@@ -77,4 +77,23 @@ Prediction result(train set)  0.835
 Prediction time (secs): 0.000
 Prediction result(test set)  0.800
 
-
+Ranked features: Index([u'absences', u'failures', u'famrel', u'Medu', u'goout', u'Fedu', u'age',
+       u'romantic', u'paid', u'nursery', u'health', u'Fjob_other',
+       u'schoolsup', u'Dalc', u'Mjob_other', u'famsize_LE3',
+       u'guardian_father', u'Fjob_at_home', u'studytime', u'Walc', u'freetime',
+       u'traveltime', u'Mjob_teacher', u'reason_other', u'Fjob_health',
+       u'internet', u'famsize_GT3', u'guardian_other', u'Mjob_health',
+       u'higher', u'reason_reputation', u'guardian_mother', u'famsup',
+       u'sex_F', u'Mjob_at_home', u'sex_M', u'address_R', u'school_MS',
+       u'address_U', u'reason_course', u'Pstatus_A', u'Pstatus_T',
+       u'Mjob_services', u'Fjob_services', u'Fjob_teacher', u'reason_home',
+       u'activities', u'school_GP'],
+      dtype='object')
+Ranked importance: [ 0.11940667  0.08990799  0.05929865  0.05666606  0.05337846  0.05127233
+  0.04484056  0.03672725  0.03312865  0.03108381  0.03060736  0.02875481
+  0.02664474  0.02604071  0.0241335   0.02191744  0.02182285  0.02167504
+  0.02115897  0.02053915  0.02053915  0.01705483  0.01566605  0.01420512
+  0.01329302  0.01321048  0.01312872  0.01239685  0.01232349  0.01132674
+  0.01095421  0.0103307   0.01026958  0.00320924  0.00308681  0.          0.
+  0.          0.          0.          0.          0.          0.          0.
+  0.          0.          0.          0.        ]
