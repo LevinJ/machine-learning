@@ -9,10 +9,12 @@ class TrainSVMModel(TrainModel):
         TrainModel.__init__(self)
         return
     def getClf(self):
-        clf = SVC(C=0.5, kernel='rbf', gamma=0.2)
+        clf = SVC(C=1, gamma=0.07)
         return clf
     def getTunedParamterOptions(self):
-        parameters = {'C':np.logspace(-2, 10, 5), 'gamma':np.logspace(-9, 3, 5)}
+#         parameters = {'C':np.logspace(-2, 10, num=5,base=2.0), 'gamma':np.logspace(-9, 3, num=5,base=2.0)}
+#         parameters = {'C':[1,10,100], 'gamma':[0.01, 0.07, 1,10]}
+        parameters = {'C':[1], 'gamma':[0.07, 1,10]}
         return parameters
 
 
