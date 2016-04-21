@@ -40,16 +40,15 @@ Prediction time (secs): 0.002
 Prediction result(test set)  0.784
 
 
-maunal tuning:
-******************Grid search SVC
-best parameters {'C': 1.0, 'gamma': 0.10000000000000001}
-best score 0.842
-Training time (secs): 796.342
-******************Grid search SVC
-Prediction time (secs): 0.007
-Prediction result(train set)  0.976
-Prediction time (secs): 0.002
-Prediction result(test set)  0.789
+******************Grid search Pipeline
+best parameters {'svc__gamma': 0.01, 'svc__C': 1.0}
+best score 0.840
+Training time (secs): 80.369
+******************Grid search Pipeline
+Prediction time (secs): 0.003
+Prediction result(train set)  0.830
+Prediction time (secs): 0.001
+Prediction result(test set)  0.800
 
 Decision Tree:
 
