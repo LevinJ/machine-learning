@@ -60,7 +60,7 @@ class TrainModel(PrepareData):
         start = time.time()
         cv=StratifiedShuffleSplit(self.y_train, n_iter=20, random_state = 42)
 #         clf = GridSearchCV(self.clf, self.tunedParams, cv=cv, scoring='f1')
-        clf = GridSearchCV(self.clf, self.tunedParams, cv=cv, scoring=make_scorer(f1_score, pos_label=1))
+        clf = GridSearchCV(self.clf, self.tunedParams, cv=cv, verbose= 2, n_jobs=4, scoring=make_scorer(f1_score, pos_label=1))
         clf.fit(self.X_train, self.y_train)
         print("best parameters {}".format( clf.best_params_))
         print("best score {:.3f}".format(clf.best_score_ ))
@@ -73,6 +73,7 @@ class TrainModel(PrepareData):
         print "Prediction result(test set)  {:.3f}".format(res)
         return
     def run(self):
+        self.preParedata()
         options ={1: self.run_with_GridSearchCV,
                   2: self.run_with_full_train_num,
                   3: self.run_with_variant_train_num}
