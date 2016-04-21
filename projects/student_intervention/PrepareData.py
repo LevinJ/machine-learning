@@ -20,8 +20,8 @@ class PrepareData(ExploreData):
     def __init__(self):
         ExploreData.__init__(self)
         self.num_train = 300  # about 75% of the data
-        self.scaling = ScaleMethod.MIN_MAX
-        self.selectedFeatures = FeatureSelMethod.VER1
+        self.scaling = ScaleMethod.NONE
+        self.selectedFeatures = FeatureSelMethod.NONE
         return
     def getAllFeatureTarget(self):
         student_data = self.student_data
