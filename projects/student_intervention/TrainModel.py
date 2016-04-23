@@ -77,7 +77,7 @@ class TrainModel(PrepareData):
         options ={1: self.run_with_GridSearchCV,
                   2: self.run_with_full_train_num,
                   3: self.run_with_variant_train_num}
-        options[1]()
+        options[2]()
 #         self.run_with_GridSearchCV()
 #         self.run_with_full_train_num()
         
