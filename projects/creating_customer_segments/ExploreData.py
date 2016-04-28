@@ -11,13 +11,14 @@ class ExploreData:
         # Read student data
         self.data = pd.read_csv("customers.csv")
         self.data.drop(['Region', 'Channel'], axis = 1, inplace = True)
+        self.selectsamples()
         
         return
     def selectsamples(self):
         indices = [10,200,400]
 #         Create a DataFrame of the chosen samples
-        samples = pd.DataFrame(self.data.loc[indices], columns = self.data.keys()).reset_index(drop = True)
-        print samples
+        self.samples = pd.DataFrame(self.data.loc[indices], columns = self.data.keys()).reset_index(drop = True)
+        print(self.samples)
         return
     def showStats(self):
         print("Wholesale customers dataset has {} samples with {} features each.".format(*self.data.shape))
@@ -42,19 +43,19 @@ class ExploreData:
         plt.show()
         
         return
-    def featureRelevance(self):
+    def featureRelevance(self, data):
         testFeature = 'Detergents_Paper'
-        new_data = self.data.drop([testFeature], axis = 1)
-        X_train, X_test, y_train, y_test = train_test_split(new_data, self.data[[testFeature]], test_size=0.25, random_state=42)
+        new_data = data.drop([testFeature], axis = 1)
+        X_train, X_test, y_train, y_test = train_test_split(new_data, data[[testFeature]], test_size=0.25, random_state=42)
         regressor = DecisionTreeRegressor(random_state=30).fit(X_train, y_train)
         score = regressor.score(X_test, y_test)
         print("feature relevance test: feature {}, score {}".format(testFeature, score))
         return
     def run(self):
         self.showStats()
-#         self.featureRelevance()
+        self.featureRelevance(self.data)
 #         self.rescale()
-        self.visualize_hist()
+#         self.visualize_hist()
             
         return
     
