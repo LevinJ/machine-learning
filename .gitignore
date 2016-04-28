@@ -70,3 +70,4 @@ projects/boston_housing/bostonhousing.csv
 *.docx
 *.tmp
 featureslabels.csv
+customers_scaled.csv
