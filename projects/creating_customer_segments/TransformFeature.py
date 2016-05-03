@@ -14,7 +14,8 @@ class TransformFeature(PrepareData):
     
     def run(self):
         self.prepareData()
-        self.pca_transform()
+        self.pca_reduction()
+#         self.pca_transform()
         return
     def savetransformeddata(self, pca):
         pca_data = pca.transform(self.good_data)
@@ -25,6 +26,20 @@ class TransformFeature(PrepareData):
         fname = "customers_pca.csv"
         if not os.path.isfile(fname):
             pca_data.to_csv(fname)
+        return
+    def pca_reduction(self):
+        # TODO: Fit PCA to the good data using only two dimensions
+        pca = PCA( n_components  = 2).fit(self.good_data)
+        
+        # TODO: Apply a PCA transformation the good data
+        reduced_data = pca.transform(self.good_data)
+        
+        # TODO: Apply a PCA transformation to the sample log-data
+        pca_samples = pca.transform(self.log_samples)
+        
+        # Create a DataFrame for the reduced data
+        reduced_data = pd.DataFrame(reduced_data, columns = ['Dimension 1', 'Dimension 2'])
+        plt.show()
         return
     def pca_transform(self):
         # TODO: Apply PCA to the good data with the same number of dimensions as features
