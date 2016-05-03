@@ -1,0 +1,21 @@
+****potential outliers***
+        Fresh      Milk    Grocery    Frozen  Detergents_Paper  Delicatessen  \
+65   4.442651  9.950323  10.732651  3.583519         10.095388      7.260523   
+66   2.197225  7.335634   8.911530  5.164786          8.151333      3.295837   
+128  4.941642  9.087834   8.248791  4.955827          6.967909      1.098612   
+154  6.432940  4.007333   4.919981  4.317488          1.945910      2.079442   
+75   9.923192  7.036148   1.098612  8.390949          1.098612      6.882437   
+
+     ol_count  
+65          2  
+66          2  
+128         2  
+154         3  
+75          2 
+
+
+
+
+1. index 71, cafe, its delicatessen category spending is high, and other spending low.
+2. index 196, restaurant, its frozen and fresh category spending is high, and other spending low.
+3. index 333, retailers, its grocery and deteregents category spending is high, and other spending low

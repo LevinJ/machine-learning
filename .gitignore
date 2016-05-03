@@ -71,3 +71,8 @@ projects/boston_housing/bostonhousing.csv
 *.tmp
 featureslabels.csv
 customers_scaled.csv
+customers_log_std.xlsx
+customers_log_std.csv
+customers_log.csv
+customers_pca.csv
+~*
