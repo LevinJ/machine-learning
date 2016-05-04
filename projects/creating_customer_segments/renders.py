@@ -66,8 +66,13 @@ def cluster_results(reduced_data, preds, centers, pca_samples):
 	    ax.scatter(x = c[0], y = c[1], marker='$%d$'%(i), alpha = 1, s=100);
 
 	# Plot transformed sample points 
-	ax.scatter(x = pca_samples[:,0], y = pca_samples[:,1], \
-	           s = 150, linewidth = 4, color = 'black', marker = 'x');
+# 	for i, c in enumerate(pca_samples):
+	for i, c in pca_samples.iterrows():
+	    ax.scatter(x = c[0], y = c[1], color = 'black',  \
+	               alpha = 1, linewidth = 0.5, marker = '$%d$'%(i), s=500);
+# 	    ax.scatter(x = c[0], y = c[1], marker='$%d$'%(i), alpha = 1, s=100);
+# 	ax.scatter(x = pca_samples[:,0], y = pca_samples[:,1], \
+# 	           s = 150, linewidth = 4, color = 'black', marker = '$%d$'%(5));
 
 	# Set plot title
 	ax.set_title("Cluster Learning on PCA-Reduced Data - Centroids Marked by Number\nTransformed Sample Data Marked by Black Cross");

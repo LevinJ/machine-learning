@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import os.path
 
-class TransformFeature(PrepareData):
+class TransformData(PrepareData):
     def __init__(self):
         PrepareData.__init__(self)
         return
@@ -41,9 +41,9 @@ class TransformFeature(PrepareData):
         reduced_data = pca.transform(self.good_data)
         
         # TODO: Apply a PCA transformation to the sample log-data
-        self.reduced_samples = pca.transform(self.log_samples)
+        pca_samples = pca.transform(self.log_samples)
         
-#         reduced_samples = pd.DataFrame(reduced_samples, columns = ['Dimension 1', 'Dimension 2'])
+        self.pca_samples = pd.DataFrame(pca_samples, index=self.log_samples.index.values, columns = ['Dimension 1', 'Dimension 2'])
         
         # Create a DataFrame for the reduced data
         self.reduced_data = pd.DataFrame(reduced_data, columns = ['Dimension 1', 'Dimension 2'])
@@ -51,8 +51,8 @@ class TransformFeature(PrepareData):
         
         return
     def plot_scatter(self):
-        self.reduced_data.plot.scatter(x='Dimension 1', y='Dimension 2', color='DarkBlue') 
-        self.reduced_samples.plot.scatter(x='Dimension 1', y='Dimension 2', color='DarkGreen') 
+#         self.reduced_data.plot.scatter(x='Dimension 1', y='Dimension 2', color='DarkBlue') 
+#         self.pca_samples.plot.scatter(x='Dimension 1', y='Dimension 2', color='DarkGreen') 
         return
     def pca_transform(self):
         # TODO: Apply PCA to the good data with the same number of dimensions as features
@@ -71,5 +71,5 @@ class TransformFeature(PrepareData):
 
 
 if __name__ == "__main__":   
-    obj= TransformFeature()
+    obj= TransformData()
     obj.run()

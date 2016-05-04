@@ -17,7 +17,7 @@ class ExploreData:
     def selectsamples(self):
         indices = [71,196,333]
 #         Create a DataFrame of the chosen samples
-        self.samples = pd.DataFrame(self.data.loc[indices], columns = self.data.keys()).reset_index(drop = True)
+        self.samples = pd.DataFrame(self.data.loc[indices], columns = self.data.keys())
         print(self.samples)
         return
     def showStats(self):

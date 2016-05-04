@@ -1,22 +1,19 @@
-from PrepareData import PrepareData
-from sklearn.decomposition import PCA
 import renders as rs
 import matplotlib.pyplot as plt
-import numpy as np
-import pandas as pd
-import os.path
-from TransformFeature import TransformFeature
+from projects.creating_customer_segments import TransformData
 from sklearn.cluster import KMeans
 from sklearn.mixture import GMM
 from sklearn import metrics
+from TransformData import TransformData
 
 
-class ClusteringData(TransformFeature):
+class ClusterData(TransformData):
     def __init__(self):
-        TransformFeature.__init__(self)
+        TransformData.__init__(self)
         return
     def run(self):
         self.transformFeature()
+#         self.visualizeUnderlyingData()
         self.doClustering()
         plt.show()
         return
@@ -47,11 +44,14 @@ class ClusteringData(TransformFeature):
         clusterer.fit(self.reduced_data)
         preds = clusterer.predict(self.reduced_data)
         centers =  clusterer.cluster_centers_
-        sample_preds = clusterer.predict(self.reduced_samples)
+        sample_preds = clusterer.predict(self.pca_samples)
         score = metrics.silhouette_score(self.reduced_data, preds, metric='sqeuclidean')
         print("KNN component %d, score %0.3f"% (n, score))
-        rs.cluster_results(self.reduced_data, preds, centers, self.reduced_samples)
+        rs.cluster_results(self.reduced_data, preds, centers, self.pca_samples)
         
+        return
+    def visualizeUnderlyingData(self):
+        rs.channel_results(self.reduced_data, self.outliers, self.pca_samples)
         return
     def doClustering(self):
 #         self.GMMClusering()
@@ -68,5 +68,5 @@ class ClusteringData(TransformFeature):
 
 
 if __name__ == "__main__":   
-    obj= ClusteringData()
+    obj= ClusterData()
     obj.run()

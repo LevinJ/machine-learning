@@ -60,12 +60,12 @@ class PrepareData(ExploreData):
         print(outliers.loc[outliers['ol_count'] >= 2])   
 #         outliers  = [154,75,65,66,128]    
 #         outliers  = [75,66,128,154] 
-        outliers  = [] 
+        self.outliers  = [] 
         # OPTIONAL: Select the indices for data points you wish to remove
 #         outliers  = [66,128,75]
         
         # Remove the outliers, if any were specified
-        self.good_data = self.log_data.drop(self.log_data.index[outliers]).reset_index(drop = True)
+        self.good_data = self.log_data.drop(self.log_data.index[self.outliers]).reset_index(drop = True)
         return
     def prepareData(self):
         self.performScaling()
