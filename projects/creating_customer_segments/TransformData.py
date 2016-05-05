@@ -1,7 +1,7 @@
 # Import libraries
 from PrepareData import PrepareData
 from sklearn.decomposition import PCA
-import renders as rs
+from projects.creating_customer_segments import renders_local as rs
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd

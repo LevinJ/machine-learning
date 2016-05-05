@@ -1,4 +1,4 @@
-import renders as rs
+from projects.creating_customer_segments import renders_local as rs
 import matplotlib.pyplot as plt
 from projects.creating_customer_segments import TransformData
 from sklearn.cluster import KMeans
@@ -15,8 +15,8 @@ class ClusterData(TransformData):
         return
     def run(self):
         self.transformData()
-#         self.visualizeUnderlyingData()
-        self.doClustering()
+        self.visualizeUnderlyingData()
+#         self.doClustering()
 #         self.dataRecovery()
         plt.show()
         return
