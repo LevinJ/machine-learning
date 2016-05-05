@@ -72,7 +72,7 @@ class ClusterData(TransformData):
     def doClustering(self):
         self.GMMClusering()
         self.KMeansClusering()
-#         self.optimalClustering()
+        self.optimalClustering()
 #         clusterer = KMeans(n_clusters=4, random_state=42)
 
         
