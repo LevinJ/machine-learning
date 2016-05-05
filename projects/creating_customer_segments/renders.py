@@ -110,10 +110,10 @@ def channel_results(reduced_data, outliers, pca_samples):
 	                 color = cmap((i-1)*1.0/2), label = labels[i-1], s=30);
 	    
 	# Plot transformed sample points   
-	for i, sample in enumerate(pca_samples):
-		ax.scatter(x = sample[0], y = sample[1], \
-	           s = 200, linewidth = 3, color = 'black', marker = 'o', facecolors = 'none');
-		ax.scatter(x = sample[0]+0.25, y = sample[1]+0.3, marker='$%d$'%(i), alpha = 1, s=125);
+# 	for i, sample in enumerate(pca_samples):
+	for i, c in pca_samples.iterrows():
+		ax.scatter(x = c[0], y = c[1], color = 'black',  \
+	               alpha = 1, linewidth = 0.5, marker = '$%d$'%(i), s=500);
 
 	# Set plot title
 	ax.set_title("PCA-Reduced Data Labeled by 'Channel'\nTransformed Sample Data Circled");

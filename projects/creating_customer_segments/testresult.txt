@@ -17,5 +17,13 @@
 
 
 1. index 71, cafe, its delicatessen category spending is high, and other spending low.
-2. index 196, restaurant, its frozen and fresh category spending is high, and other spending low.
+2. index 289, hotel, its frozen and fresh category spending is high, and other spending low.
 3. index 333, retailers, its grocery and deteregents category spending is high, and other spending low
+
+
+
+71.9% variance in the data is explained in total by the first and second principle component. The first four principle components can explain 93.1% variance. Based on the above, roughly we can interpret the first four dimensions as below:
+1. first dimension: retailer, it grocery, detergent paper ratio are relatively high
+2. second dimenstion: cafe, its delicateseen ratio is relatively high
+3. third dimension: hotel, its fresh and detergents paper ratio is relatively high
+4. fourth dimensioin: restaurant, its frozen ratio is relatively high.

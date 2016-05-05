@@ -19,7 +19,7 @@ class TransformData(PrepareData):
         plt.show()
 #         self.pca_transform()
         return
-    def transformFeature(self):
+    def transformData(self):
         self.prepareData()
         self.pca_reduction()
         return
@@ -35,13 +35,13 @@ class TransformData(PrepareData):
         return
     def pca_reduction(self):
         # TODO: Fit PCA to the good data using only two dimensions
-        pca = PCA( n_components  = 2).fit(self.good_data)
+        self.pca = PCA( n_components  = 2).fit(self.good_data)
         
         # TODO: Apply a PCA transformation the good data
-        reduced_data = pca.transform(self.good_data)
+        reduced_data = self.pca.transform(self.good_data)
         
         # TODO: Apply a PCA transformation to the sample log-data
-        pca_samples = pca.transform(self.log_samples)
+        pca_samples = self.pca.transform(self.log_samples)
         
         self.pca_samples = pd.DataFrame(pca_samples, index=self.log_samples.index.values, columns = ['Dimension 1', 'Dimension 2'])
         

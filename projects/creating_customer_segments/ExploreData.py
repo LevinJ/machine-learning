@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn import preprocessing
 from sklearn.cross_validation import train_test_split
 from sklearn.tree import DecisionTreeRegressor
+import numpy as np
 
 
 class ExploreData:
@@ -15,7 +16,8 @@ class ExploreData:
         
         return
     def selectsamples(self):
-        indices = [71,196,333]
+        indices = [71,289,333]
+#         indices = np.random.choice(self.data.index.values, size = 10, replace=False)
 #         Create a DataFrame of the chosen samples
         self.samples = pd.DataFrame(self.data.loc[indices], columns = self.data.keys())
         print(self.samples)
