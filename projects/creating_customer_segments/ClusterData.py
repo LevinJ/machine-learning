@@ -70,8 +70,8 @@ class ClusterData(TransformData):
         rs.channel_results(self.reduced_data, self.outliers, self.pca_samples)
         return
     def doClustering(self):
-        self.GMMClusering()
-        self.KMeansClusering()
+#         self.GMMClusering()
+#         self.KMeansClusering()
         self.optimalClustering()
 #         clusterer = KMeans(n_clusters=4, random_state=42)
 

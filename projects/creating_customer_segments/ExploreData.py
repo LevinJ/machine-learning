@@ -16,7 +16,7 @@ class ExploreData:
         
         return
     def selectsamples(self):
-        indices = [71,289,333]
+        indices = [240,289,333]
 #         indices = np.random.choice(self.data.index.values, size = 10, replace=False)
 #         Create a DataFrame of the chosen samples
         self.samples = pd.DataFrame(self.data.loc[indices], columns = self.data.keys())

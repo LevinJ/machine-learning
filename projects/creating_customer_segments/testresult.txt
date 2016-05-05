@@ -16,9 +16,9 @@
 
 
 
-1. index 71, cafe, its delicatessen category spending is high, and other spending low.
-2. index 289, hotel, its frozen and fresh category spending is high, and other spending low.
-3. index 333, retailers, its grocery and deteregents category spending is high, and other spending low
+1. index 240, cafe, its delicatessen category spending is relatively high.
+2. index 289,hotel, its fresh category spending is relatively high.
+3. index 333, retailers, its grocery category spending is is relatively high
 
 
 
