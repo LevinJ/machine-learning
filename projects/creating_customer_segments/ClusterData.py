@@ -15,8 +15,8 @@ class ClusterData(TransformData):
         return
     def run(self):
         self.transformData()
-        self.visualizeUnderlyingData()
-#         self.doClustering()
+#         self.visualizeUnderlyingData()
+        self.doClustering()
 #         self.dataRecovery()
         plt.show()
         return
@@ -42,7 +42,7 @@ class ClusterData(TransformData):
             centers =  clusterer.means_ 
             sample_preds = clusterer.predict(self.pca_samples)
             score = metrics.silhouette_score(self.reduced_data, preds, metric='sqeuclidean')
-            print("GMM component %d, score %0.3f"% (n, score))
+            print("GMM with cluster number %d, score %0.3f"% (n, score))
         return
     def KMeansClusering(self):
         for n in range(2,6):
@@ -52,7 +52,7 @@ class ClusterData(TransformData):
             centers =  clusterer.cluster_centers_
             sample_preds = clusterer.predict(self.pca_samples)
             score = metrics.silhouette_score(self.reduced_data, preds, metric='sqeuclidean')
-            print("KNN component %d, score %0.3f"% (n, score))
+            print("K Means with cluster number %d, score %0.3f"% (n, score))
         return
     def optimalClustering(self):
         n =2
@@ -62,7 +62,7 @@ class ClusterData(TransformData):
         self.centers =  clusterer.cluster_centers_
         sample_preds = clusterer.predict(self.pca_samples)
         score = metrics.silhouette_score(self.reduced_data, preds, metric='sqeuclidean')
-        print("KNN component %d, score %0.3f"% (n, score))
+        print("K Means with cluster number %d, score %0.3f"% (n, score))
         rs.cluster_results(self.reduced_data, preds, self.centers, self.pca_samples)
         
         return
@@ -70,8 +70,8 @@ class ClusterData(TransformData):
         rs.channel_results(self.reduced_data, self.outliers, self.pca_samples)
         return
     def doClustering(self):
-#         self.GMMClusering()
-#         self.KMeansClusering()
+        self.GMMClusering()
+        self.KMeansClusering()
         self.optimalClustering()
 #         clusterer = KMeans(n_clusters=4, random_state=42)
 
