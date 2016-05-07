@@ -16,8 +16,8 @@ class TransformData(PrepareData):
         self.prepareData()
         self.pca_reduction()
         self.plot_scatter()
+        self.pca_transform()
         plt.show()
-#         self.pca_transform()
         return
     def transformData(self):
         self.prepareData()
