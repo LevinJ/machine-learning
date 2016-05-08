@@ -17,6 +17,7 @@ class TransformData(PrepareData):
         self.pca_reduction()
         self.plot_scatter()
         self.pca_transform()
+        self.visualizeComRatio()
         plt.show()
         return
     def transformData(self):
@@ -50,6 +51,12 @@ class TransformData(PrepareData):
 #         plt.show()
         
         return
+    def visualizeComRatio(self):
+        x = np.arange(6)
+        pca = PCA( n_components  = 6).fit(self.good_data)
+#         plt.Figure()
+        plt.plot(x, np.cumsum(pca.explained_variance_ratio_), '-o')
+        return
     def plot_scatter(self):
 #         self.reduced_data.plot.scatter(x='Dimension 1', y='Dimension 2', color='DarkBlue') 
 #         self.pca_samples.plot.scatter(x='Dimension 1', y='Dimension 2', color='DarkGreen') 
@@ -65,7 +72,7 @@ class TransformData(PrepareData):
         pca_samples = pca.transform(self.log_samples)
         print pd.DataFrame(np.round(pca_samples, 4), columns = pca_results.index.values)
         
-        plt.show()
+#         plt.show()
         return
 
 

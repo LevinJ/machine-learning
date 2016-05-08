@@ -48,7 +48,7 @@ class ExploreData:
     def featureRelevance(self, data):
         testFeature = 'Detergents_Paper'
         new_data = data.drop([testFeature], axis = 1)
-        X_train, X_test, y_train, y_test = train_test_split(new_data, data[[testFeature]], test_size=0.25, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(new_data, data[[testFeature]], test_size=0.25, random_state=1)
         regressor = DecisionTreeRegressor(random_state=30).fit(X_train, y_train)
         score = regressor.score(X_test, y_test)
         print("feature relevance test: feature {}, score {}".format(testFeature, score))
