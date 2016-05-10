@@ -15,7 +15,7 @@ class ClusterData(TransformData):
         return
     def run(self):
         self.transformData()
-#         self.visualizeUnderlyingData()
+        self.visualizeUnderlyingData()
         self.doClustering()
 #         self.dataRecovery()
         plt.show()

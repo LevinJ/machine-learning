@@ -72,7 +72,7 @@ class TransformData(PrepareData):
         pca_samples = pca.transform(self.log_samples)
         print pd.DataFrame(np.round(pca_samples, 4), columns = pca_results.index.values)
         
-#         plt.show()
+        plt.show()
         return
 
 

@@ -60,7 +60,8 @@ class PrepareData(ExploreData):
         print(outliers.loc[outliers['ol_count'] >= 2])   
 #         outliers  = [154,75,65,66,128]    
 #         outliers  = [75,66,128,154] 
-        self.outliers  = [] 
+        self.outliers  = [128,66,65,75,154] 
+#         self.outliers  = [] 
         # OPTIONAL: Select the indices for data points you wish to remove
 #         outliers  = [66,128,75]
         
