@@ -15,8 +15,9 @@ class ClusterData(TransformData):
         return
     def run(self):
         self.transformData()
-        self.visualizeUnderlyingData()
+#         self.visualizeUnderlyingData()
         self.doClustering()
+        self.barPlotDatapoints()
 #         self.dataRecovery()
         plt.show()
         return
@@ -65,6 +66,32 @@ class ClusterData(TransformData):
         print("K Means with cluster number %d, score %0.3f"% (n, score))
         rs.cluster_results(self.reduced_data, preds, self.centers, self.pca_samples)
         
+        return
+    def barPlotDatapoints(self):
+        fig, ax = plt.subplots()
+        n_groups = 5
+        index = np.arange(n_groups)
+        bar_width = 0.35
+        
+        opacity = 0.4
+        error_config = {'ecolor': '0.3'}
+        rects1 = plt.bar(index, self.centers[:,0].tolist() + self.pca_samples.iloc[:,0].tolist(), bar_width,
+                 alpha=opacity,
+                 color='b',
+                 error_kw=error_config,
+                 label='Dim 1')
+        
+        rects2 = plt.bar(index + bar_width, self.centers[:,1].tolist() + self.pca_samples.iloc[:,1].tolist(), bar_width,
+                 alpha=opacity,
+                 color='r',
+                 error_kw=error_config,
+                 label='Dim 2')
+        
+        plt.xlabel('Data points')
+        plt.ylabel('Scores')
+        plt.title('Scores by datpoint and dimensions')
+        plt.xticks(index + bar_width, ('Seg0', 'Seg1','S0','S1','S2'))
+        plt.legend()
         return
     def visualizeUnderlyingData(self):
         rs.channel_results(self.reduced_data, self.outliers, self.pca_samples)
