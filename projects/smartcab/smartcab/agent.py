@@ -21,11 +21,14 @@ class LearningAgent(Agent):
         self.next_waypoint = self.planner.next_waypoint()  # from route planner, also displayed by simulator
         inputs = self.env.sense(self)
         deadline = self.env.get_deadline(self)
+        self.state = (self.next_waypoint, inputs,deadline)
 
         # TODO: Update state
         
         # TODO: Select action according to your policy
-        action = None
+        listOfActions=[None, 'forward', 'left', 'right']
+        action = random.choice(listOfActions)
+#         action = self.next_waypoint
 
         # Execute action and get reward
         reward = self.env.act(self, action)
@@ -48,7 +51,7 @@ def run():
     sim = Simulator(e, update_delay=0.5, display=True)  # create simulator (uses pygame when display=True, if available)
     # NOTE: To speed up simulation, reduce update_delay and/or set display=False
 
-    sim.run(n_trials=100)  # run for a specified number of trials
+    sim.run(n_trials=1)  # run for a specified number of trials
     # NOTE: To quit midway, press Esc or close pygame window, or hit Ctrl+C on the command-line
 
 
