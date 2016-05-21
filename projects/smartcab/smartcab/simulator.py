@@ -141,8 +141,15 @@ class Simulator(object):
                 # Draw simple agent (circle with a short line segment poking out to indicate heading)
                 self.pygame.draw.circle(self.screen, agent_color, agent_pos, self.agent_circle_radius)
                 self.pygame.draw.line(self.screen, agent_color, agent_pos, state['location'], self.road_width)
-            if agent.get_next_waypoint() is not None:
-                self.screen.blit(self.font.render(agent.get_next_waypoint(), True, agent_color, self.bg_color), (agent_pos[0] + 10, agent_pos[1] + 10))
+#             if agent.get_next_waypoint() is not None:
+#                 self.screen.blit(self.font.render(agent.get_next_waypoint(), True, agent_color, self.bg_color), (agent_pos[0] + 10, agent_pos[1] + 10))
+            if hasattr(agent, 'action'):
+                action = agent.action
+                if action is None:
+                    action = 'None'
+                if action =='Outdated':
+                    action = None
+                self.screen.blit(self.font.render(action, True, agent_color, self.bg_color), (agent_pos[0] + 10, agent_pos[1] + 10))
             if state['destination'] is not None:
                 self.pygame.draw.circle(self.screen, agent_color, (state['destination'][0] * self.env.block_size, state['destination'][1] * self.env.block_size), 6)
                 self.pygame.draw.circle(self.screen, agent_color, (state['destination'][0] * self.env.block_size, state['destination'][1] * self.env.block_size), 15, 2)
