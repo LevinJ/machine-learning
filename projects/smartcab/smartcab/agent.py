@@ -20,29 +20,29 @@ class LearningAgent(Agent):
         self.simulator = sim
         return
     def update(self, t):
-        time.sleep(2)
+        #allow time for us to see the reward that the agent get due to its last action
+        if self.simulator.display:
+            time.sleep(2)
         # Gather inputs
         self.next_waypoint = self.planner.next_waypoint()  # from route planner, also displayed by simulator
         inputs = self.env.sense(self)
         deadline = self.env.get_deadline(self)
-        self.state = (self.next_waypoint, inputs['light'], inputs['oncoming'], inputs['right'], inputs['left'])
-
         # TODO: Update state
+        self.state = (self.next_waypoint, inputs['light'], inputs['oncoming'], inputs['right'], inputs['left'])
         
         # TODO: Select action according to your policy
         listOfActions=[None, 'forward', 'left', 'right']
-#         action = random.choice(listOfActions)
-        action = self.next_waypoint
+        action = random.choice(listOfActions)
+#         action = self.next_waypoint
         self.action = action
-        #render initial status
         
         self.env.status_text = "state: {}\naction: {}".format(self.get_state(), action)
 
         print "LearningAgent.update(): deadline = {}, inputs = {}, next_waypoint={},action = {}".format(deadline, inputs, self.next_waypoint,action)
         if self.simulator.display:
             self.simulator.render()
-        time.sleep(3)#allow time for us to see the action the learning agent is about to take
-#         action = self.next_waypoint
+            #allow time for us to see the action that the learning agent is about to take
+            time.sleep(3)
 
         # Execute action and get reward
         reward = self.env.act(self, action)
