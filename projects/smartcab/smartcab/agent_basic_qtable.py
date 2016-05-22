@@ -81,13 +81,16 @@ class LearningAgent_Basic_Qtable(LearningAgent):
         self.current_action = self.action
         self.current_reward = reward
         return
-    def beforeSimlatorRun(self):
+    def beforeSimlatorRun(self, sim):
+        LearningAgent.beforeSimlatorRun(self, sim)
         if self.operationType == OprationType.TEST:
             self.loadQTable('qtable.pkl')
         return
     def afterSimulatorRun(self):
+        LearningAgent.afterSimulatorRun(self)
         if self.operationType == OprationType.TRAIN:
             self.dumpQTable('qtable.pkl')
+            return 
         return
     def update(self, t):
         #allow time for us to see the reward that the agent get due to its last action
@@ -113,6 +116,7 @@ class LearningAgent_Basic_Qtable(LearningAgent):
 
         # Execute action and get reward
         reward = self.env.act(self, self.action)
+        self.totalReward = self.totalReward + reward
         self.updateQTable_1(reward)
         #this action has been used and need to be invalidated
         self.action = "Outdated"
@@ -127,7 +131,7 @@ class LearningAgent_Basic_Qtable(LearningAgent):
 def run():
     """Run the agent for a finite number of trials."""
     # Specify the operaton type for Q Table: TRAIN or TEST
-    ot = OprationType.TEST
+    ot = OprationType.TRAIN
     
     
     # Set up environment and agent
@@ -139,11 +143,10 @@ def run():
     # Now simulate it
     sim = Simulator(e, update_delay=0.01, display=False)  # create simulator (uses pygame when display=True, if available)
     # NOTE: To speed up simulation, reduce update_delay and/or set display=False
-    a.setSimulator(sim)
     a.setOperationType(ot)
-    a.beforeSimlatorRun()
+    
     sim.run(n_trials=100)  # run for a specified number of trials
-    a.afterSimulatorRun()
+ 
     # NOTE: To quit midway, press Esc or close pygame window, or hit Ctrl+C on the command-line
 
 

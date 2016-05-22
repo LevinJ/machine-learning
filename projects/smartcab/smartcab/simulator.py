@@ -58,8 +58,20 @@ class Simulator(object):
             except Exception as e:
                 self.display = False
                 print "Simulator.__init__(): Error initializing GUI objects; display disabled.\n{}: {}".format(e.__class__.__name__, e)
-
+    def trail_start(self):
+        self.env.primary_agent.trail_start()
+        return
+    def trail_end(self):
+        self.env.primary_agent.trail_end()
+        return
+    def beforeSimlatorRun(self):
+        self.env.primary_agent.beforeSimlatorRun(self)
+        return
+    def afterSimulatorRun(self):
+        self.env.primary_agent.afterSimulatorRun()
+        return
     def run(self, n_trials=1):
+        self.beforeSimlatorRun()
         self.quit = False
         for trial in xrange(n_trials):
             print "Simulator.run(): Trial {}".format(trial)  # [debug]
@@ -67,6 +79,7 @@ class Simulator(object):
             self.current_time = 0.0
             self.last_updated = 0.0
             self.start_time = time.time()
+            self.trail_start()
             while True:
                 try:
                     # Update current time
@@ -101,9 +114,10 @@ class Simulator(object):
                 finally:
                     if self.quit or self.env.done:
                         break
-
+            self.trail_end()            
             if self.quit:
                 break
+        self.afterSimulatorRun()
 
     def render(self):
         # Clear screen
