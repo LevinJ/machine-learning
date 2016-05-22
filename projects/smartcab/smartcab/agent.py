@@ -44,6 +44,10 @@ class LearningAgent(Agent):
         listOfActions=[None, 'forward', 'left', 'right']
 #         return self.next_waypoint
         return random.choice(listOfActions)
+    def beforeAct(self, next_state):
+        pass
+    def afterAct(self, reward):
+        pass
     def update(self, t):
         #allow time for us to see the reward that the agent get due to its last action
         if self.simulator.display:
@@ -54,11 +58,8 @@ class LearningAgent(Agent):
         deadline = self.env.get_deadline(self)
         # TODO: Update state
         self.state = (self.next_waypoint, inputs['light'], inputs['oncoming'], inputs['right'], inputs['left'])
-        
         # TODO: Select action according to your policy
-        
         self.action = self.selectAction(self.state)
-#         action = self.next_waypoint
         
         self.env.status_text = "state: {}\naction: {}".format(self.get_state(), self.action)
 
@@ -69,13 +70,14 @@ class LearningAgent(Agent):
             time.sleep(3)
 
         # Execute action and get reward
+        self.beforeAct(self.state)
         reward = self.env.act(self, self.action)
+        self.afterAct(reward)
         self.totalReward = self.totalReward + reward
         #this action has been used and need to be invalidated
         self.action = "Outdated"
 
         # TODO: Learn policy based on state, action, reward
-
         print "LearningAgent.update():reward = {}".format(reward)  # [debug]
 
 

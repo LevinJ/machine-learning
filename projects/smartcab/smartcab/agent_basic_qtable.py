@@ -92,38 +92,12 @@ class LearningAgent_Basic_Qtable(LearningAgent):
             self.dumpQTable('qtable.pkl')
             return 
         return
-    def update(self, t):
-        #allow time for us to see the reward that the agent get due to its last action
-        if self.simulator.display:
-            time.sleep(2)
-        # Gather inputs
-        self.next_waypoint = self.planner.next_waypoint()  # from route planner, also displayed by simulator
-        inputs = self.env.sense(self)
-        deadline = self.env.get_deadline(self)
-        # TODO: Update state
-        self.state = (self.next_waypoint, inputs['light'], inputs['oncoming'], inputs['right'], inputs['left'])
-        self.updateQTable_2(self.state)
-        # TODO: Select action according to your policy
-        self.action = self.selectAction(self.state)
-        
-        self.env.status_text = "state: {}\naction: {}".format(self.get_state(), self.action)
-
-        print "LearningAgent.update(): deadline = {}, inputs = {}, next_waypoint={},action = {}".format(deadline, inputs, self.next_waypoint,self.action)
-        if self.simulator.display:
-            self.simulator.render()
-            #allow time for us to see the action that the learning agent is about to take
-            time.sleep(3)
-
-        # Execute action and get reward
-        reward = self.env.act(self, self.action)
-        self.totalReward = self.totalReward + reward
+    def beforeAct(self, next_state):
+        self.updateQTable_2(next_state)
+        return 
+    def afterAct(self, reward):
         self.updateQTable_1(reward)
-        #this action has been used and need to be invalidated
-        self.action = "Outdated"
-
-        # TODO: Learn policy based on state, action, reward
-        print "LearningAgent.update():reward = {}".format(reward)  # [debug]
-    
+        return
     
 
 
@@ -131,7 +105,7 @@ class LearningAgent_Basic_Qtable(LearningAgent):
 def run():
     """Run the agent for a finite number of trials."""
     # Specify the operaton type for Q Table: TRAIN or TEST
-    ot = OprationType.TRAIN
+    ot = OprationType.TEST
     
     
     # Set up environment and agent
