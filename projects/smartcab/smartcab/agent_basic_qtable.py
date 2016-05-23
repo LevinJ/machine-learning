@@ -21,6 +21,7 @@ class LearningAgent_Basic_Qtable(LearningAgent):
         self.updateQTable_1_done = False
         self.alpha = 0.1
         self.gamma = 0.5 
+        self.epsion = None
         return
     def dumpQTable(self, filename):
         with open(filename, "w") as clf_outfile:
@@ -43,10 +44,18 @@ class LearningAgent_Basic_Qtable(LearningAgent):
         state,_,_ = self.getCurrentState()
         self.updateQTable_2(state)
         return
+    def selectAction_greedy(self, state):
+        res = np.random.choice(['useq', 'random'],p=[1-self.epsion, self.epsion])
+        if res == 'random':
+            return self.getRandomAction()
+        
+        return self.getQAction(state)
     def selectAction(self, state):
         if self.operationType == OprationType.TRAIN:
-            listOfActions=[None, 'forward', 'left', 'right']
-            return random.choice(listOfActions)
+            if self.epsion is None:
+                return self.getRandomAction()
+            else:
+                return self.selectAction_greedy(state)
         # we are testing Q table here
         if self.operationType != OprationType.TEST:
             raise Exception("invalid operation is being set" + self.operationType)
@@ -71,6 +80,9 @@ class LearningAgent_Basic_Qtable(LearningAgent):
         return max(tempList)
     def setLearingRate(self, alpha):
         self.alpha = alpha
+        return
+    def setEpsion(self, epsion):
+        self.epsion = epsion
         return
     def setDicountFactor(self, gamma):
         self.gamma = gamma
@@ -116,7 +128,7 @@ class LearningAgent_Basic_Qtable(LearningAgent):
         qdata = []
         for key, value in self.qtable.iteritems():
             qdata.append((key[0],key[1], value))
-        df = pd.DataFrame(qdata, columns=['state', 'action'], 'qvalue')
+        df = pd.DataFrame(qdata, columns=['state', 'action', 'qvalue'])
         grouped  = df.groupby('state')
         grouped.aggregate(np.max)
         return
@@ -134,6 +146,7 @@ def run():
     """Run the agent for a finite number of trials."""
     # Specify the operaton type for Q Table: TRAIN or TEST
     ot = OprationType.TEST
+    epsion = 0.5
     
     
     # Set up environment and agent
@@ -146,6 +159,7 @@ def run():
     sim = Simulator(e, update_delay=0.01, display=False)  # create simulator (uses pygame when display=True, if available)
     # NOTE: To speed up simulation, reduce update_delay and/or set display=False
     a.setOperationType(ot)
+    a.setEpsion(epsion)
     
     sim.run(n_trials=100)  # run for a specified number of trials
  

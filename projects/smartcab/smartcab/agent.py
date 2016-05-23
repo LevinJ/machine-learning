@@ -52,10 +52,13 @@ class LearningAgent(Agent):
     def afterSimulatorRun(self):
         self.outputRunningResult()
         return
-    def selectAction(self, state):
+    def getRandomAction(self):
         listOfActions=[None, 'forward', 'left', 'right']
-#         return self.next_waypoint
         return random.choice(listOfActions)
+    def selectAction(self, state):
+        
+#         return self.next_waypoint
+        return self.getRandomAction()
     def beforeAct(self, next_state):
         pass
     def afterAct(self, reward):
