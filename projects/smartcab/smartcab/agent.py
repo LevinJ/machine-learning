@@ -46,22 +46,25 @@ class LearningAgent(Agent):
         return
     def selectAction(self, state):
         listOfActions=[None, 'forward', 'left', 'right']
-#         return self.next_waypoint
-        return random.choice(listOfActions)
+        return self.next_waypoint
+#         return random.choice(listOfActions)
     def beforeAct(self, next_state):
         pass
     def afterAct(self, reward):
         pass
+    def getCurrentState(self):
+        self.next_waypoint = self.planner.next_waypoint()  # from route planner, also displayed by simulator
+        inputs = self.env.sense(self)
+        deadline = self.env.get_deadline(self)
+        state = (self.next_waypoint, inputs['light'], inputs['oncoming'], inputs['right'], inputs['left'])
+        return state,inputs,deadline
     def update(self, t):
         #allow time for us to see the reward that the agent get due to its last action
         if self.simulator.display:
             time.sleep(2)
-        # Gather inputs
-        self.next_waypoint = self.planner.next_waypoint()  # from route planner, also displayed by simulator
-        inputs = self.env.sense(self)
-        deadline = self.env.get_deadline(self)
+            
         # TODO: Update state
-        self.state = (self.next_waypoint, inputs['light'], inputs['oncoming'], inputs['right'], inputs['left'])
+        self.state,inputs,deadline = self.getCurrentState()
         # TODO: Select action according to your policy
         self.action = self.selectAction(self.state)
         

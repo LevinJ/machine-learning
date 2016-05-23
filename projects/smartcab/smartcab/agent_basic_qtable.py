@@ -30,6 +30,15 @@ class LearningAgent_Basic_Qtable(LearningAgent):
     def setOperationType(self, operationType):
         self.operationType = operationType
         return
+    def trail_end(self):
+        LearningAgent.trail_end(self)
+        #For the last action, updateQTable_1 will be executed, but not updateQTable_2, as a result, the Q value that correspons to last action will not be updated for last action
+        # if we do not do it here
+        if self.operationType != OprationType.TRAIN:
+            return
+        state,_,_ = self.getCurrentState()
+        self.updateQTable_2(state)
+        return
     def selectAction(self, state):
         if self.operationType == OprationType.TRAIN:
             listOfActions=[None, 'forward', 'left', 'right']
