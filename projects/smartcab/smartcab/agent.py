@@ -45,16 +45,17 @@ class LearningAgent(Agent):
         # For those do incur penalty, what's the average
         self.final_penalties = df['penalty'][df['penalty']<0].mean()
         self.final_deadline = df['deadline'].mean()
-        print "Test result: Average Discounted Reward,{} Completion Rate,{} Average Penalty,{} Average Deadline,{}".format(str(self.final_test_result), 
+        self.final_strrepresentation = "Test result: Average Discounted Reward,{} Completion Rate,{} Average Penalty,{} Average Deadline,{}".format(str(self.final_test_result), 
                                                                                                     self.final_completerate, self.final_penalties,self.final_deadline)
+        print self.final_strrepresentation
         return
     def afterSimulatorRun(self):
         self.outputRunningResult()
         return
     def selectAction(self, state):
         listOfActions=[None, 'forward', 'left', 'right']
-        return self.next_waypoint
-#         return random.choice(listOfActions)
+#         return self.next_waypoint
+        return random.choice(listOfActions)
     def beforeAct(self, next_state):
         pass
     def afterAct(self, reward):

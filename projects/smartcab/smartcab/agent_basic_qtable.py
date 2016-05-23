@@ -17,6 +17,8 @@ class LearningAgent_Basic_Qtable(LearningAgent):
         LearningAgent.__init__(self, env)
         self.qtable = defaultdict(int)
         self.updateQTable_1_done = False
+        self.alpha = 0.1
+        self.gamma = 0.5 
         return
     def dumpQTable(self, filename):
         with open(filename, "w") as clf_outfile:
@@ -65,6 +67,12 @@ class LearningAgent_Basic_Qtable(LearningAgent):
         for action in listOfActions:
             tempList.append(self.qtable[(next_state, action)])
         return max(tempList)
+    def setLearingRate(self, alpha):
+        self.alpha = alpha
+        return
+    def setDicountFactor(self, gamma):
+        self.gamma = gamma
+        return
     def updateQTable_2(self, next_state):
         if self.operationType != OprationType.TRAIN:
             return
@@ -72,8 +80,8 @@ class LearningAgent_Basic_Qtable(LearningAgent):
         if not self.updateQTable_1_done:
             return
         #At this point, we know the next_state,and can proceed to update Q Table
-        alpha = 0.1
-        gamma = 0.5
+        alpha = self.alpha
+        gamma = self.gamma
         
         q_old = self.qtable[(self.current_state, self.current_action)]
         q_max = self.getQMax(next_state)

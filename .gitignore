@@ -67,6 +67,8 @@ target/
 .pydevproject
 
 projects/boston_housing/bostonhousing.csv
+projects/smartcab/grid_search_result_old.csv
+projects/smartcab/smartcab/qtable.pkl
 *.docx
 *.tmp
 featureslabels.csv
