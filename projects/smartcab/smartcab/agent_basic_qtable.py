@@ -7,6 +7,8 @@ import random
 from collections import defaultdict
 import pickle
 import numpy as np
+import pandas as pd
+
 
 class OprationType(Enum):
     TRAIN = 1
@@ -102,12 +104,21 @@ class LearningAgent_Basic_Qtable(LearningAgent):
         LearningAgent.beforeSimlatorRun(self, sim)
         if self.operationType == OprationType.TEST:
             self.loadQTable('qtable.pkl')
+#         self.saveQTabletoCSV()
         return
     def afterSimulatorRun(self):
         LearningAgent.afterSimulatorRun(self)
         if self.operationType == OprationType.TRAIN:
             self.dumpQTable('qtable.pkl')
             return 
+        return
+    def saveQTabletoCSV(self):
+        qdata = []
+        for key, value in self.qtable.iteritems():
+            qdata.append((key[0],key[1], value))
+        df = pd.DataFrame(qdata, columns=['state', 'action'], 'qvalue')
+        grouped  = df.groupby('state')
+        grouped.aggregate(np.max)
         return
     def beforeAct(self, next_state):
         self.updateQTable_2(next_state)
