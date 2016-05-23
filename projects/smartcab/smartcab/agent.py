@@ -33,19 +33,21 @@ class LearningAgent(Agent):
     def beforeSimlatorRun(self, sim):
         self.simulator = sim 
         return
-    def afterSimulatorRun(self):
-#         print self.testResults
+    def outputTestResult(self):
         df = pd.DataFrame(self.testResults, columns=['metrics', 'completed', 'totalreward', 'deadline'])
         print df
         print df[df['completed'] == False]
-        self.final_completerate = df['completed'].sum()/df['completed'].count()
+        self.final_completerate = df['completed'].sum()/float(df['completed'].count())
         self.final_test_result = df['metrics'].mean()
         print "test result: Total Reward,{} Completion Rate,{}".format(str(self.final_test_result), self.final_completerate)
         return
+    def afterSimulatorRun(self):
+        self.outputTestResult()
+        return
     def selectAction(self, state):
         listOfActions=[None, 'forward', 'left', 'right']
-        return self.next_waypoint
-#         return random.choice(listOfActions)
+#         return self.next_waypoint
+        return random.choice(listOfActions)
     def beforeAct(self, next_state):
         pass
     def afterAct(self, reward):
