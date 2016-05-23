@@ -69,6 +69,7 @@ target/
 projects/boston_housing/bostonhousing.csv
 projects/smartcab/grid_search_result_old.csv
 projects/smartcab/smartcab/qtable.pkl
+projects/smartcab/grid_search_result.csv
 *.docx
 *.tmp
 featureslabels.csv
