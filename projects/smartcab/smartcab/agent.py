@@ -14,6 +14,7 @@ class LearningAgent(Agent):
         self.planner = RoutePlanner(self.env, self)  # simple route planner to get next_waypoint
         # TODO: Initialize any additional variables here
         self.testResults = []
+        self.totalPenaty = 0# This indicates the invalid the learning agent made during a trial
         self.totalReward = 0
 
     def reset(self, destination=None):
@@ -21,6 +22,7 @@ class LearningAgent(Agent):
         # TODO: Prepare for a new trip; reset any variables here, if required
     def trail_start(self):
         self.totalReward = 0
+        self.totalPenaty = 0
         return
     def trail_end(self):
         state = self.env.agent_states[self]
@@ -28,21 +30,26 @@ class LearningAgent(Agent):
 #         metrics = 0 if completed else -15
         metrics = self.totalReward
 #         metrics = metrics + self.totalReward
-        self.testResults.append((metrics, completed, self.totalReward, state['deadline']))
+        self.testResults.append((metrics, completed, self.totalReward,  self.totalPenaty,state['deadline']))
         return
     def beforeSimlatorRun(self, sim):
         self.simulator = sim 
         return
-    def outputTestResult(self):
-        df = pd.DataFrame(self.testResults, columns=['metrics', 'completed', 'totalreward', 'deadline'])
+    def outputRunningResult(self):
+        df = pd.DataFrame(self.testResults, columns=['metrics', 'completed', 'totalreward', 'penalty','deadline'])
         print df
-        print df[df['completed'] == False]
+        print "####Penalty incurred: \n" + str(df[df['penalty'] < 0])
+        print "####Not completed: \n" + str(df[df['completed'] == False])
         self.final_completerate = df['completed'].sum()/float(df['completed'].count())
         self.final_test_result = df['metrics'].mean()
-        print "test result: Total Reward,{} Completion Rate,{}".format(str(self.final_test_result), self.final_completerate)
+        # For those do incur penalty, what's the average
+        self.final_penalties = df['penalty'][df['penalty']<0].mean()
+        self.final_deadline = df['deadline'].mean()
+        print "test result: Total Reward,{} Completion Rate,{} Total Penalty,{} Deadline,{}".format(str(self.final_test_result), 
+                                                                                                    self.final_completerate, self.final_penalties,self.final_deadline)
         return
     def afterSimulatorRun(self):
-        self.outputTestResult()
+        self.outputRunningResult()
         return
     def selectAction(self, state):
         listOfActions=[None, 'forward', 'left', 'right']
@@ -81,6 +88,8 @@ class LearningAgent(Agent):
         reward = self.env.act(self, self.action)
         self.afterAct(reward)
         self.totalReward = self.totalReward + reward
+        if reward < 0:
+            self.totalPenaty = self.totalPenaty + reward
         #this action has been used and need to be invalidated
         self.action = "Outdated"
 
