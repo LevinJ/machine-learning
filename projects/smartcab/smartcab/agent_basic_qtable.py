@@ -116,21 +116,27 @@ class LearningAgent_Basic_Qtable(LearningAgent):
         LearningAgent.beforeSimlatorRun(self, sim)
         if self.operationType == OprationType.TEST:
             self.loadQTable('qtable.pkl')
-#         self.saveQTabletoCSV()
         return
     def afterSimulatorRun(self):
         LearningAgent.afterSimulatorRun(self)
         if self.operationType == OprationType.TRAIN:
             self.dumpQTable('qtable.pkl')
+            self.saveQTablePolicy()
             return 
         return
-    def saveQTabletoCSV(self):
+    def saveQTablePolicy(self):
         qdata = []
+        resDf = pd.DataFrame()
         for key, value in self.qtable.iteritems():
             qdata.append((key[0],key[1], value))
         df = pd.DataFrame(qdata, columns=['state', 'action', 'qvalue'])
         grouped  = df.groupby('state')
-        grouped.aggregate(np.max)
+        for _, group in grouped:
+            maxVal = group['qvalue'].max()
+            df = group[group['qvalue'] == maxVal]
+            resDf = pd.concat([resDf, df])
+        resDf = resDf.reset_index(drop=True)
+        resDf.to_csv('qtable_policy.csv')
         return
     def beforeAct(self, next_state):
         self.updateQTable_2(next_state)
