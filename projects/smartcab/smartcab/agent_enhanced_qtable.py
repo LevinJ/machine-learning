@@ -16,7 +16,7 @@ class FineTuneQTable():
 #     def test(self, alpha=None, gamma=None, epsilon=None):
 #         self.single_run(OprationType.TEST, alpha, gamma, epsilon)
 #         return
-    def single_run(self, operationtype, alpha=None, gamma=None, epsilon=None):
+    def single_run(self, operationtype, alpha=None, gamma=None, epsilon=None, n_trials=100):
 #         ot = OprationType.TEST
         # Set up environment and agent
         e = Environment()  # create environment (also adds some dummy traffic)
@@ -34,7 +34,7 @@ class FineTuneQTable():
             a.setDicountFactor(gamma)
         a.setEpsion(epsilon)
         
-        sim.run(n_trials=100) 
+        sim.run(n_trials=n_trials) 
         if operationtype == OprationType.TEST:
             self.scores.append((a.final_test_result, a.alpha, a.gamma, a.epsion,a.final_strrepresentation))
         return
@@ -47,17 +47,14 @@ class FineTuneQTable():
         print "******Best Parameters: *****\n{}".format(df[df['score'] == maxVals])
         return
     def run(self):
-#         alphas = [0.1]
-#         gammas = [0.44]
-#         epsilons = [None]
-        alphas = [0.1, 0.5, 0.6, 0.8]
-        gammas = [0.44, 0.5,0.8, 1, 1.5, 2]
-        epsilons = [None, 0.3,0.5, 0.8, 1]
+        alphas = [0.1,  0.5]
+        gammas = [0.5,1]
+        epsilons = [None, 0.5,0.8]
         for alpha in alphas:
             for gamma in gammas:
                 for epsilon in epsilons:
-                    self.single_run(OprationType.TRAIN, alpha, gamma, epsilon)
-                    self.single_run(OprationType.TEST, alpha, gamma, epsilon)
+                    self.single_run(OprationType.TRAIN, alpha, gamma, epsilon,n_trials=100)
+                    self.single_run(OprationType.TEST, alpha, gamma, epsilon,n_trials=1200)
         self.outputGridSearchResult()
         return 
     

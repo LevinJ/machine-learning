@@ -49,7 +49,7 @@ class LearningAgent_Basic_Qtable(LearningAgent):
         if res == 'random':
             return self.getRandomAction()
         
-        return self.getQAction(state)
+        return self.getQBestAction(state)
     def selectAction(self, state):
         if self.operationType == OprationType.TRAIN:
             if self.epsion is None:
@@ -59,9 +59,9 @@ class LearningAgent_Basic_Qtable(LearningAgent):
         # we are testing Q table here
         if self.operationType != OprationType.TEST:
             raise Exception("invalid operation is being set" + self.operationType)
-        return self.getQAction(state)
+        return self.getQBestAction(state)
     
-    def getQAction(self, state):
+    def getQBestAction(self, state):
         tempList = []
         listOfActions=[None, 'forward', 'left', 'right']
         for action in listOfActions:
@@ -72,7 +72,7 @@ class LearningAgent_Basic_Qtable(LearningAgent):
             
         return listOfActions[np.random.choice(maxindexes)]
     
-    def getQMax(self, next_state):
+    def getQMaxValues(self, next_state):
         tempList = []
         listOfActions=[None, 'forward', 'left', 'right']
         for action in listOfActions:
@@ -98,7 +98,7 @@ class LearningAgent_Basic_Qtable(LearningAgent):
         gamma = self.gamma
         
         q_old = self.qtable[(self.current_state, self.current_action)]
-        q_max = self.getQMax(next_state)
+        q_max = self.getQMaxValues(next_state)
         q_new = (1- alpha)*q_old + alpha*(self.current_reward + gamma * q_max)
         self.qtable[(self.current_state, self.current_action)] = q_new
 #         print "Q table: " + str(self.qtable)
@@ -106,7 +106,7 @@ class LearningAgent_Basic_Qtable(LearningAgent):
     def updateQTable_1(self, reward):
         if self.operationType != OprationType.TRAIN:
             return
-        # At this point, we will not know the next state(since the traffice ight would change, and the other dummy agents would move)
+        # At this point, we will not know the next state(since the traffic light would change, and the other dummy agents would move)
         self.updateQTable_1_done = True
         self.current_state = self.state
         self.current_action = self.action
@@ -142,11 +142,9 @@ class LearningAgent_Basic_Qtable(LearningAgent):
 
 
 
-def run():
+def run(ot, n_trials=100):
     """Run the agent for a finite number of trials."""
-    # Specify the operaton type for Q Table: TRAIN or TEST
-    ot = OprationType.TEST
-    epsion = 0.5
+    epsion = None
     
     
     # Set up environment and agent
@@ -161,10 +159,13 @@ def run():
     a.setOperationType(ot)
     a.setEpsion(epsion)
     
-    sim.run(n_trials=100)  # run for a specified number of trials
+    sim.run(n_trials=n_trials)  # run for a specified number of trials
  
     # NOTE: To quit midway, press Esc or close pygame window, or hit Ctrl+C on the command-line
 
 
 if __name__ == '__main__':
-    run()
+    # Train Q Table
+    run(OprationType.TRAIN, n_trials=100)
+    # Use Q Table
+    run(OprationType.TEST, n_trials=1200)

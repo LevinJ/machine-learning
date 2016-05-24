@@ -56,9 +56,9 @@ class LearningAgent(Agent):
         listOfActions=[None, 'forward', 'left', 'right']
         return random.choice(listOfActions)
     def selectAction(self, state):
-        
 #         return self.next_waypoint
         return self.getRandomAction()
+    
     def beforeAct(self, next_state):
         pass
     def afterAct(self, reward):
@@ -111,7 +111,7 @@ def run():
     # NOTE: You can set enforce_deadline=False while debugging to allow longer trials
 
     # Now simulate it
-    sim = Simulator(e, update_delay=0.01, display=False)  # create simulator (uses pygame when display=True, if available)
+    sim = Simulator(e, update_delay=0.01, display=True)  # create simulator (uses pygame when display=True, if available)
     # NOTE: To speed up simulation, reduce update_delay and/or set display=False
 
     sim.run(n_trials=100)  # run for a specified number of trials
