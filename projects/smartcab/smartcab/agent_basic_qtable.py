@@ -67,9 +67,9 @@ class LearningAgent_Basic_Qtable(LearningAgent):
         for action in listOfActions:
             tempList.append(self.qtable[(state, action)])
         
-        m = max(tempList)
-        maxindexes =  [i for i, j in enumerate(tempList) if j == m]
-            
+        maxQ = max(tempList)
+        maxindexes =  [i for i, j in enumerate(tempList) if j == maxQ]
+        #if more than one action has maxQ value, choose one of them randomly  
         return listOfActions[np.random.choice(maxindexes)]
     
     def getQMaxValues(self, next_state):

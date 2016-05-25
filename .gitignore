@@ -74,6 +74,9 @@ projects/smartcab/grid_search_result_1.csv
 projects/smartcab/grid_search_result_2.csv
 projects/smartcab/grid_search_result_3.csv
 projects/smartcab/qtable_policy.csv
+projects/smartcab/grid_search_result_4.csv
+projects/smartcab/qtable_4.pkl
+projects/smartcab/qtable_policy_4.csv
 *.docx
 *.tmp
 featureslabels.csv

@@ -16,7 +16,7 @@ class FineTuneQTable():
 #     def test(self, alpha=None, gamma=None, epsilon=None):
 #         self.single_run(OprationType.TEST, alpha, gamma, epsilon)
 #         return
-    def single_run(self, operationtype, alpha=None, gamma=None, epsilon=None, n_trials=100):
+    def single_run(self, operationtype, alpha=None, gamma=None, epsilon=None, n_trials=100, display=False):
 #         ot = OprationType.TEST
         # Set up environment and agent
         e = Environment()  # create environment (also adds some dummy traffic)
@@ -25,7 +25,7 @@ class FineTuneQTable():
         # NOTE: You can set enforce_deadline=False while debugging to allow longer trials
     
         # Now simulate it
-        sim = Simulator(e, update_delay=0.01, display=False)  # create simulator (uses pygame when display=True, if available)
+        sim = Simulator(e, update_delay=0.01, display=display)  # create simulator (uses pygame when display=True, if available)
         # NOTE: To speed up simulation, reduce update_delay and/or set display=False
         a.setOperationType(operationtype)
         if not alpha is None:
@@ -46,9 +46,16 @@ class FineTuneQTable():
         df.to_csv('grid_search_result.csv')
         print "******Best Parameters: *****\n{}".format(df[df['score'] == maxVals])
         return
+    def run_final_agent(self):
+        alpha = 0.1
+        gamma = 0.5
+        epsilon = 0.5
+        self.single_run(OprationType.TRAIN, alpha, gamma, epsilon,n_trials=100)
+        self.single_run(OprationType.TEST, alpha, gamma, epsilon,n_trials=1200, display=False)
+        return
     def run(self):
         alphas = [0.1,  0.5]
-        gammas = [0.5,1]
+        gammas = [0.5, 0.9]
         epsilons = [None, 0.5,0.8]
         for alpha in alphas:
             for gamma in gammas:
@@ -62,4 +69,9 @@ class FineTuneQTable():
 
 if __name__ == "__main__":   
     obj= FineTuneQTable()
-    obj.run()
+#     runType = "GridSearch"
+    runType = "finalagent"
+    if(runType == "GridSearch"):
+        obj.run()
+    else:
+        obj.run_final_agent()
