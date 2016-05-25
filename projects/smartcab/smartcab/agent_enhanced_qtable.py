@@ -51,7 +51,7 @@ class FineTuneQTable():
         gamma = 0.5
         epsilon = 0.5
         self.single_run(OprationType.TRAIN, alpha, gamma, epsilon,n_trials=100)
-        self.single_run(OprationType.TEST, alpha, gamma, epsilon,n_trials=1200, display=False)
+        self.single_run(OprationType.TEST, alpha, gamma, epsilon,n_trials=1200, display=True)
         return
     def run(self):
         alphas = [0.1,  0.5]
