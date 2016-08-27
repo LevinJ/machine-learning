@@ -45,6 +45,23 @@ class BinaryTree(object):
         self.preorder_print(start.right, traversal)
         
         return traversal
+    
+    def breadth_first_print(self, current_queue):
+        """Helper method - use this to create a 
+        recursive print solution."""
+        queue_lenght = len(current_queue) 
+        if queue_lenght==0 :
+            return
+        for _ in range(queue_lenght):
+            item = current_queue.pop(0)
+            print item.value
+            if item.left is not None:
+                current_queue.append(item.left)
+            if item.right is not None:
+                current_queue.append(item.right)
+        self.breadth_first_print(current_queue)
+        return
+
 
 
 # Set up tree
@@ -53,6 +70,9 @@ tree.root.left = Node(2)
 tree.root.right = Node(3)
 tree.root.left.left = Node(4)
 tree.root.left.right = Node(5)
+
+
+tree.breadth_first_print([tree.root])
 
 # Test search
 # Should be True

@@ -1,0 +1,45 @@
+
+
+Question1:
+
+iterate through the the string s, each time extract a substring that has the same length as t, and see if they are anagram.
+question1_isanagram is a helper function that determines if two string of same length are anagram
+
+suppose length of s is n, and length of t is m
+time efficiency is about O(((n-m)^2) * m^2 ), there are about (n-m)*(n-m) number of substrings, for each string, it takes m^2 time to determine if the substring is anagram
+space efficiency about O(m), as a temporary string named b is used in helper function question1_isanagram
+
+Question2:
+
+iterate through all the substring of a, check if the substring is palindrome, if it is and is larger than the already found palindrome, then replace the already found palindrome by this new one.
+Helper function question2_ispalindrome is used to determind if a substring is palindrome
+
+suppose length of a is n
+time efficiency is about O(n^3 ) 
+space efficiency about O(1)
+
+Question3:
+Use Prim's algorithm to get minimum spanning tree (http://www.tutorialspoint.com/data_structures_algorithms/prims_spanning_tree_algorithm.htm). Basically Add one vertex into the tree at a time,
+and everty time add the existing tree's adjacent vertex which has  the shorted edege value.
+
+suppse number of vertex in graph is n, and number of edge in graph is m, then
+time efficiency: O(n*(m+m+ 2), so roughly O(n*m)
+space efficiency: O(m), as we use outgoing_edges to store all outgoing edges of existing minimum spanning tree
+
+Question4:
+
+First find the parent path for both node n1 and n2, and then compare two parent path and identify the least common child ancestor
+
+suppose the number of nodes in the tree is n, 
+time efficiency: about O(n^2) in worst case
+space efficincy: about O(n), in worst case, as parents_path_n1 and parents_path_n2 are used
+
+Question5:
+
+transform the linked list into an array, and then just access the least common ancestor by index
+
+suppose the number of nodes in the link is n,
+
+time efficiency: O(n)
+space efficiency: O(n), temporary array is used for easy access by index
+
