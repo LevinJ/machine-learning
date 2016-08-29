@@ -39,7 +39,7 @@ def question1_isanagram(sub_s, t):
 def question1(s, t):
     s_lenght = len(s)
     t_length = len(t)
-    
+
     if s_lenght < t_length:
         return False
     s = s.lower()
@@ -54,7 +54,7 @@ def question1(s, t):
     return False
 
 
-print "Test case for Question 1"     
+print "Test case for Question 1"
 #True
 print question1('This is Madam Curie, she is cool', 'Radium came')
 
@@ -96,7 +96,8 @@ def question2(a):
     for start in range(a_length):
         letters_to_ignroe = question2_letter_toignroe()
         if a[start] in letters_to_ignroe:
-            #a palindrome string won't start with any of the ignored letters, so move on to next position
+            #a palindrome string won't start with any of the ignored letters,
+            #so move on to next position
             continue
         end = start + 1
         while end <= a_length:
@@ -109,12 +110,13 @@ def question2(a):
                     largetst_palindrome_string = sub_string
             #move the end pointer forward
             end = end +1
-        
+
     return largetst_palindrome_string
 # print question2_ispalindrome("Eva, can I stab bats in a 1cave?")
-print "Test case for Question 2"    
+print "Test case for Question 2"
 #A man, a plan, a canal, Panama
-print question2("three palindromes in all, A man, a plan, a canal, Panama!, stressed, put it up, find the longest one")
+print question2("three palindromes in all, A man, a plan, a canal, Panama!,\
+ stressed, put it up, find the longest one")
 
 # "", edge case, expect to see a blank line in the console
 print question2("")
@@ -129,22 +131,22 @@ print question2("one signle char Palindrome")
 
 """
 
-class quetion3_helper(object):
-    def get_initial_mstree(self, G):
+class Quetion3Helper(object):
+    def get_initial_mstree(self, graph):
         # selct a random node into the minimum spanning tee
-        return {G.keys()[0]:[]}
+        return {graph.keys()[0]:[]}
     """
     get all  edges in the graph
     """
-    def get_all_edges(self, G):
+    def get_all_edges(self, graph):
         res = {}
-        for node, edges in G.iteritems():
+        for node, edges in graph.iteritems():
             for edge in edges:
                 node2= edge[0]
                 edge_value = edge[1]
                 if node+node2 not in res:
                     res[node+ node2] = edge_value
-                    
+
         return res
     """
     get all outgoing edges of current minimum spannding tree
@@ -159,7 +161,7 @@ class quetion3_helper(object):
                 continue
             if (not edge_name[0] in nodes_in_mstree) and ( edge_name[1] in nodes_in_mstree):
                 #put the node in mstree as first letter
-                res[edge_name[1] + edge_name[0]] = edge_value     
+                res[edge_name[1] + edge_name[0]] = edge_value
         return res
     """
     find minimum edge out of all outging edges
@@ -178,26 +180,26 @@ class quetion3_helper(object):
     def update_mstree(self, mstree, min_edge_name, min_edge_value):
         existing_node_name = min_edge_name[0]
         new_node_name = min_edge_name[1]
-        #insert the new edge 
+        #insert the new edge
         mstree[existing_node_name].append((new_node_name, min_edge_value))
         #insert the new node and new edge
         mstree[new_node_name] = [(existing_node_name, min_edge_value)]
         return
-    def question3(self, G):
-        if G is None:
+    def question3(self, graph):
+        if graph is None:
             return None
-        nodes_num = len(G) #number of nodes in the graph
-        alledges = self.get_all_edges(G)
-        mstree = self.get_initial_mstree(G)
+        nodes_num = len(graph) #number of nodes in the graph
+        alledges = self.get_all_edges(graph)
+        mstree = self.get_initial_mstree(graph)
         while len(mstree) < nodes_num:
             outgoing_edges = self.get_outgoing_edges(alledges, mstree)
             min_edge_name, min_edge_value = self.find_minimum_outgoing_edge(outgoing_edges)
             self.update_mstree(mstree, min_edge_name, min_edge_value)
         return mstree
 
-def question3(G):
-    obj = quetion3_helper()
-    return obj.question3(G)
+def question3(graph):
+    obj = Quetion3Helper()
+    return obj.question3(graph)
 
 print "Test case for Question 3"
 G= {'S':[('A', 7), ('C',8)],
@@ -206,14 +208,17 @@ G= {'S':[('A', 7), ('C',8)],
     'C':[('S', 8), ('A', 3), ('B', 4), ('C',3)],
     'D':[('C', 3), ('B', 2), ('T', 2)],
     'T':[('D',2),('B', 5)]}
-#{'A': [('C', 3), ('S', 7)], 'C': [('A', 3), ('D', 3)], 'B': [('D', 2)], 'D': [('C', 3), ('B', 2), ('T', 2)], 'S': [('A', 7)], 'T': [('D', 2)]}
+#{'A': [('C', 3), ('S', 7)], 'C': [('A', 3), ('D', 3)], 'B': [('D', 2)],
+#'D': [('C', 3), ('B', 2), ('T', 2)], 'S': [('A', 7)], 'T': [('D', 2)]}
 print question3(G)
 
 #None, edge case, input is empty graph
 print question3(None)
 
-G={'A': [('C', 3), ('S', 7)], 'C': [('A', 3), ('D', 3)], 'B': [('D', 2)], 'D': [('C', 3), ('B', 2), ('T', 2)], 'S': [('A', 7)], 'T': [('D', 2)]}
-#{'A': [('C', 3), ('S', 7)], 'C': [('A', 3), ('D', 3)], 'B': [('D', 2)], 'D': [('C', 3), ('B', 2), ('T', 2)], 'S': [('A', 7)], 'T': [('D', 2)]}, edge cases, input is a tree
+G={'A': [('C', 3), ('S', 7)], 'C': [('A', 3), ('D', 3)], 'B': [('D', 2)], \
+   'D': [('C', 3), ('B', 2), ('T', 2)], 'S': [('A', 7)], 'T': [('D', 2)]}
+#{'A': [('C', 3), ('S', 7)], 'C': [('A', 3), ('D', 3)], 'B': [('D', 2)],
+#'D': [('C', 3), ('B', 2), ('T', 2)], 'S': [('A', 7)], 'T': [('D', 2)]}, edge cases, input is a tree
 print question3(G)
 
 
@@ -224,7 +229,7 @@ print question3(G)
 
 """
 
-class Question4_helper:
+class Question4Helper:
     """
     find the parent path of a node, all the way up to root node
     T: the tree
@@ -232,6 +237,8 @@ class Question4_helper:
     n: the node
     parents_path: the resultant parent path of node n
     """
+    def __init__(self):
+        pass
     def find_parents_path(self, T, r, n, parents_path):
         if (r == n):
             return
@@ -257,9 +264,9 @@ class Question4_helper:
             else:
                 break
         return common_ancestor
-    
+
 def question4(T, r, n1, n2):
-    helper = Question4_helper()
+    helper = Question4Helper()
     return helper.find_least_common_ancestor(T, r, n1, n2)
 print "Test case for Question 4"
 #3
@@ -283,9 +290,9 @@ class Node(object):
         self.next = None
         return
 
-def initiate_list(linked_list):   
+def initiate_list(linked_list_):
     for i in np.arange(2, 6,1):
-        tail  = linked_list
+        tail  = linked_list_
         while tail.next is not None:
             tail = tail.next
         tail.next  = Node(i)
@@ -294,26 +301,26 @@ def initiate_list(linked_list):
 Helper function that transform the linked list to an array, for easier access via index later on
 """
 
-def question5_get_linkedlist_length(linked_list):
+def question5_get_linkedlist_length(linked_list_):
     linkedlist_length = 0
-    cursor = linked_list
+    cursor = linked_list_
     while cursor is not None:
         linkedlist_length = linkedlist_length + 1
         cursor = cursor.next
     return linkedlist_length
-def question5(linked_list, m):
+def question5(linked_list_, m):
     if m < 1:
         return None
-    linked_list_length = question5_get_linkedlist_length(linked_list)
+    linked_list_length = question5_get_linkedlist_length(linked_list_)
     if m > linked_list_length:
         return None
-    cursor = linked_list
+    cursor = linked_list_
     for _ in range(linked_list_length - m):
         cursor = cursor.next
     return cursor.data
 
 print "Test case for Question 5"
-linked_list = Node(1) 
+linked_list = Node(1)
 initiate_list(linked_list)
 #3
 print question5(linked_list, 3)
