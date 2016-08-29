@@ -86,3 +86,4 @@ customers_log.csv
 customers_pca.csv
 projects/smartcab/qtable.pkl
 ~*
+temp/

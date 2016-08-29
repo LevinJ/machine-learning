@@ -8,26 +8,38 @@ import numpy as np
 """
 Helper function for question1, determine if a and b is anagram
 """
-def question1_isanagram(a, b):
-    if (len(a) != len(b)):
-        raise 'a and b should have equal length'
-    for letter_a in a:
-        letter_find = False
-        for i in range(len(b)):
-            if letter_a == b[i]:
-                letter_find = True
-                #remove the letter tht has been found so that we do not have to search it next time
-                b = b[:i] + b[i+1:]
-                break
-        if not letter_find:
+def question1_get_dict(substring):
+    """
+    Get all the letters in the string substring to a letter count dictionary
+    """
+    letter_count_dict = {}
+    for letter in substring:
+        if not letter in letter_count_dict:
+            letter_count_dict[letter] = 0
+        letter_count_dict[letter] = letter_count_dict[letter] + 1
+    return letter_count_dict
+def quesion1_isdict_equal(sub_s_dict, t_dict):
+    """
+    Determine if two letter count dictionaries are identical
+    """
+    if not len(sub_s_dict) == len(t_dict):
+        return False
+    for letter, letter_count in sub_s_dict.iteritems():
+        if not letter in t_dict:
+            return False
+        if not letter_count == t_dict[letter]:
             return False
     return True
+def question1_isanagram(sub_s, t):
+    if (len(sub_s) != len(t)):
+        raise 'sub_s and t should have equal length'
+    sub_s_dict = question1_get_dict(sub_s)
+    t_dict = question1_get_dict(t)
+    return quesion1_isdict_equal(sub_s_dict, t_dict)
 def question1(s, t):
     s_lenght = len(s)
     t_length = len(t)
     
-    if t_length <= 1:
-        return False
     if s_lenght < t_length:
         return False
     s = s.lower()
@@ -46,10 +58,10 @@ print "Test case for Question 1"
 #True
 print question1('This is Madam Curie, she is cool', 'Radium came')
 
-#False, edge case
+#True, edge case, s is one signle char string
 print question1('l', 'l')
 
-#False, edge case
+#False, edge case, s is empty
 print question1('', 'silent')
 
 
@@ -65,42 +77,38 @@ return a tuple (bispalindrome, palindrome_length)
 bispalindrome: if s is a palindrome
 palindrome_length: the lenght of palindrome, excluding punctuation, and word dividers.
 """
+def question2_letter_toignroe():
+    return [',', ' ','!','?']
 def question2_ispalindrome(s):
     s = s.lower()
-    letter_to_remvoe = [',', ' ','!','?']
+    letter_to_remvoe = question2_letter_toignroe()
     for letter in letter_to_remvoe:
         s = s.replace(letter, '')
 
-    s_length = len(s)
-    if s_length < 3:
+    s_palindrome = s[::-1]
+    if s_palindrome != s:
         return False, 0
-    start = 0
-    end = s_length - 1
-    while start < end:
-        if s[start] != s[end]:
-            return False, 0
-        start =start + 1
-        end   = end -1 
     return True, len(s)
 def question2(a):
     a_length = len(a)
     largest_palindrome_length = 0
     largetst_palindrome_string = ""
     for start in range(a_length):
-        end = a_length
-        while end >= start + 2:
+        letters_to_ignroe = question2_letter_toignroe()
+        if a[start] in letters_to_ignroe:
+            #a palindrome string won't start with any of the ignored letters, so move on to next position
+            continue
+        end = start + 1
+        while end <= a_length:
             sub_string = a[start:end]
             bispalindrome, palindrome_length = question2_ispalindrome(sub_string)
-    
             #update largest palindrome if neccessary
             if bispalindrome:
-                if palindrome_length >= largest_palindrome_length:
-                    # largest_palindrome_length is updated even when it's equal to palindrome_length
-                    # this is because we want to display the resultant palindrome string without chararacters like  [',', ' ','!','?']
+                if palindrome_length > largest_palindrome_length:
                     largest_palindrome_length = palindrome_length
                     largetst_palindrome_string = sub_string
             #move the end pointer forward
-            end = end -1
+            end = end +1
         
     return largetst_palindrome_string
 # print question2_ispalindrome("Eva, can I stab bats in a 1cave?")
@@ -111,8 +119,8 @@ print question2("three palindromes in all, A man, a plan, a canal, Panama!, stre
 # "", edge case, expect to see a blank line in the console
 print question2("")
 
-# "", edge case, expect to see a blank line in the console
-print question2("no Palindrome")
+# o, edge case, expect to see a blank line in the console
+print question2("one signle char Palindrome")
 
 
 """
@@ -285,22 +293,24 @@ def initiate_list(linked_list):
 """
 Helper function that transform the linked list to an array, for easier access via index later on
 """
-def question5_tranforminto_array(linked_list):
-    arr = []
-    current_node = linked_list
-    while current_node is not None:
-        arr.append(current_node)
-        current_node = current_node.next
-    return arr
+
+def question5_get_linkedlist_length(linked_list):
+    linkedlist_length = 0
+    cursor = linked_list
+    while cursor is not None:
+        linkedlist_length = linkedlist_length + 1
+        cursor = cursor.next
+    return linkedlist_length
 def question5(linked_list, m):
     if m < 1:
         return None
-    arr = question5_tranforminto_array(linked_list)
-    arr_length = len(arr)
-    index = arr_length -m
-    if index < 0:
+    linked_list_length = question5_get_linkedlist_length(linked_list)
+    if m > linked_list_length:
         return None
-    return arr[arr_length -m ].data
+    cursor = linked_list
+    for _ in range(linked_list_length - m):
+        cursor = cursor.next
+    return cursor.data
 
 print "Test case for Question 5"
 linked_list = Node(1) 
