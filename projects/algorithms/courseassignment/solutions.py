@@ -18,24 +18,9 @@ def question1_get_dict(substring):
             letter_count_dict[letter] = 0
         letter_count_dict[letter] = letter_count_dict[letter] + 1
     return letter_count_dict
-def quesion1_isdict_equal(sub_s_dict, t_dict):
-    """
-    Determine if two letter count dictionaries are identical
-    """
-    if not len(sub_s_dict) == len(t_dict):
-        return False
-    for letter, letter_count in sub_s_dict.iteritems():
-        if not letter in t_dict:
-            return False
-        if not letter_count == t_dict[letter]:
-            return False
-    return True
-def question1_isanagram(sub_s, t):
-    if (len(sub_s) != len(t)):
-        raise 'sub_s and t should have equal length'
+def question1_isanagram(sub_s, t_dict):
     sub_s_dict = question1_get_dict(sub_s)
-    t_dict = question1_get_dict(t)
-    return quesion1_isdict_equal(sub_s_dict, t_dict)
+    return sub_s_dict == t_dict
 def question1(s, t):
     s_lenght = len(s)
     t_length = len(t)
@@ -44,12 +29,13 @@ def question1(s, t):
         return False
     s = s.lower()
     t = t.lower()
-    for i in range(s_lenght):
+    t_dict = question1_get_dict(t)
+    for i in range(s_lenght - t_length + 1):
         start = i
         end = start + t_length
         if (end > s_lenght):
             break
-        if (question1_isanagram(s[start:end], t)):
+        if (question1_isanagram(s[start:end], t_dict)):
             return True
     return False
 
