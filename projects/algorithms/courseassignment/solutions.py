@@ -63,11 +63,11 @@ return a tuple (bispalindrome, palindrome_length)
 bispalindrome: if s is a palindrome
 palindrome_length: the lenght of palindrome, excluding punctuation, and word dividers.
 """
-def question2_letter_toignroe():
+def question2_letter_toignore():
     return [',', ' ','!','?']
 def question2_ispalindrome(s):
     s = s.lower()
-    letter_to_remvoe = question2_letter_toignroe()
+    letter_to_remvoe = question2_letter_toignore()
     for letter in letter_to_remvoe:
         s = s.replace(letter, '')
 
@@ -80,7 +80,7 @@ def question2(a):
     largest_palindrome_length = 0
     largetst_palindrome_string = ""
     for start in range(a_length):
-        letters_to_ignroe = question2_letter_toignroe()
+        letters_to_ignroe = question2_letter_toignore()
         if a[start] in letters_to_ignroe:
             #a palindrome string won't start with any of the ignored letters,
             #so move on to next position
